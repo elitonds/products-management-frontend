@@ -58,6 +58,7 @@ const ProductList: React.FC<Props> = () => {
           placeholder="Digite o nome do produto"
           onSearch={onSearch}
           enterButton
+          allowClear
         />
         <PaginatedList
           total={totalResults}

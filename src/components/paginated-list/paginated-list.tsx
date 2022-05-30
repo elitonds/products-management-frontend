@@ -7,6 +7,7 @@ interface Props {
   columns: ColumnsType<any>;
   dataSource: any[];
   onChangePage: any;
+  onSelectRow?: any;
 }
 
 const PaginatedList: React.FC<Props> = (props) => {
@@ -16,6 +17,7 @@ const PaginatedList: React.FC<Props> = (props) => {
     columns,
     dataSource = [],
     onChangePage,
+    onSelectRow = () => {},
   } = props;
 
   return (
@@ -29,6 +31,13 @@ const PaginatedList: React.FC<Props> = (props) => {
           defaultCurrent: 1,
           onChange: onChangePage,
           pageSize: totalPerPage,
+        }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              onSelectRow(record);
+            },
+          };
         }}
       />
     </>

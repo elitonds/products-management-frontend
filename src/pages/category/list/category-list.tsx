@@ -1,5 +1,6 @@
-import { Input } from "antd";
+import { Button, Input } from "antd";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../../../components/card/card";
 import PaginatedList from "../../../components/paginated-list/paginated-list";
 import CategoryService from "../../../services/category.service";
@@ -8,6 +9,7 @@ interface Props {}
 
 const CategoryList: React.FC<Props> = () => {
   const { Search } = Input;
+  const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
   const [totalResults, setTotalResults] = useState(0);
@@ -59,13 +61,28 @@ const CategoryList: React.FC<Props> = () => {
     },
   ];
 
+  const onSelectCategory = (category: any) => {
+    if (category?.id) navigate(`/category/${category.id}`);
+  };
+
   return (
     <>
       <Card title="Categoria">
+        <div className="col-md-12 d-flex justify-content-end mb-3">
+          <Button
+            key="btn-new"
+            id="btn-new"
+            type="primary"
+            onClick={() => navigate("/category/new")}
+          >
+            Novo
+          </Button>
+        </div>
         <Search
           placeholder="Digite o nome da categoria"
           onSearch={onSearch}
           enterButton
+          allowClear
         />
         <PaginatedList
           total={totalResults}
@@ -73,6 +90,7 @@ const CategoryList: React.FC<Props> = () => {
           dataSource={categories}
           onChangePage={(page: number) => onChangePage(page)}
           totalPerPage={totalPerPage}
+          onSelectRow={onSelectCategory}
         />
       </Card>
     </>
