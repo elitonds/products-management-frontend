@@ -64,7 +64,7 @@ const Category: React.FC<Props> = () => {
         onOk={() => deleteCategory()}
         onCancel={() => setIsDeleteModalVisible(false)}
       >
-        <p>{`Deseja excluir a categoria '${form.getFieldValue("name")}'`}</p>
+        <p>{`Deseja excluir a categoria '${form.getFieldValue("name")}'?`}</p>
       </Modal>
       <Card title="Cadastro de categoria">
         <Form

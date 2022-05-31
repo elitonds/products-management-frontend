@@ -6,6 +6,10 @@ const CategoryService = {
     return await api.get(`category?search=${search}&take=${take}&skip=${skip}`);
   },
 
+  findSelect() {
+    return api.get('category/select');
+  },
+
   async findOne(id: any) {
     return await api.get(`category/${id}`);
   },

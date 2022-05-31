@@ -1,41 +1,48 @@
-import { Input } from "antd";
+import { Button, Input } from "antd";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../../../components/card/card";
 import PaginatedList from "../../../components/paginated-list/paginated-list";
 import ProductService from "../../../services/product.service";
 interface Props {}
 
 const ProductList: React.FC<Props> = () => {
-  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
+
+  const [products, setProducts] = useState([]);
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch] = useState("");
   const totalPerPage = 10;
 
   const { Search } = Input;
 
-  const findAllCategories = useCallback(async (searchContent='', take = 10, skip = 0) => {
+  const findAllProducts = useCallback(async (searchContent='', take = 10, skip = 0) => {
     const paginatioData = await ProductService.findAll(searchContent, take, skip);
     const { dataSource, totalResults } = paginatioData.data;
     const listCategories =
       dataSource?.map((category: any) => {
         return { ...category, key: category.code };
       }) || [];
-    setCategories(listCategories);
+    setProducts(listCategories);
     setTotalResults(totalResults);
   }, []);
 
   useEffect(() => {
-    findAllCategories();
-  }, [findAllCategories]);
+    findAllProducts();
+  }, [findAllProducts]);
 
   const onChangePage = async (page: number) => {
     const skip = page * totalPerPage - totalPerPage;
-    await findAllCategories(search, 10, skip);
+    await findAllProducts(search, 10, skip);
   };
 
   const onSearch = async (value: string) => {
     setSearch(value);
-    await findAllCategories(value);
+    await findAllProducts(value);
+  };
+
+  const onSelectProduct = (category: any) => {
+    if (category?.id) navigate(`/product/${category.id}`);
   };
 
   const columns = [
@@ -54,6 +61,16 @@ const ProductList: React.FC<Props> = () => {
   return (
     <>
       <Card title="Produto">
+        <div className="col-md-12 d-flex justify-content-end mb-3">
+          <Button
+            key="btn-new"
+            id="btn-new"
+            type="primary"
+            onClick={() => navigate("/product/new")}
+          >
+            Novo
+          </Button>
+        </div>
         <Search
           placeholder="Digite o nome do produto"
           onSearch={onSearch}
@@ -63,9 +80,10 @@ const ProductList: React.FC<Props> = () => {
         <PaginatedList
           total={totalResults}
           columns={columns}
-          dataSource={categories}
+          dataSource={products}
           onChangePage={(page: number) => onChangePage(page)}
           totalPerPage={totalPerPage}
+          onSelectRow={onSelectProduct}
         />
       </Card>
     </>
