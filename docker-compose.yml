@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  frontend_app:
+    build: .
+    container_name: products_manager_frontend
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true

@@ -17,3 +17,9 @@ Por padrão a aplicação roda no endereço [http://localhost:3000](http://local
 ### `npm test` ou `yarn test`
 
 Roda os testes
+
+## Docker
+A aplicação também pode ser iniciada via docker com o comando `docker-compose up`, no fim do processo a aplicação estará exposta na url [Localhost](http://localhost:3000/)\
+\
+`Pré-requisitos:` Ter o [Docker](https://www.docker.com/) e [Docker-compose](https://docs.docker.com/compose/) instalados e configurados em sua máquina.
+
