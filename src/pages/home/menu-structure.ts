@@ -8,16 +8,5 @@ export const menuList: IMenu[] = [
       { key: "category", label: "Categoria", path: "/category" },
       { key: "product", label: "Produto", path: "/product" },
     ],
-  },
-  {
-    key: "utils",
-    label: "Utilitários",
-    submenus: [
-      {
-        key: "import-category",
-        label: "Importar categoria",
-        path: "/import-category",
-      },
-    ],
-  },
+  }
 ];
